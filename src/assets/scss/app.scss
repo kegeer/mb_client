@@ -1,0 +1,15 @@
+// Variables
+@import "variables";
+
+//partials
+@import "layout";
+@import "responsive";
+
+// Bootstrap
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+// Font-awesome
+@import "../../../node_modules/font-awesome/scss/font-awesome.scss";
+
+// SweetAlert
+@import "../../../node_modules/sweetalert/dev/sweetalert.scss";
