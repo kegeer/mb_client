@@ -21,10 +21,45 @@
 .nav-inner {
   display: none;
 }
+
+#list, #main {
+  padding: 2em;
+  overflow: hidden;
+}
 #list {
   background-color: #f9f9f9;
-  padding: 2em;
 }
 #main {
   background-color: #fff;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.divider {
+  border-bottom: 2px solid #eee;
+  margin: 1em;
+}
+.form-header {
+  padding: .5em 0;
+  h3, a {
+    margin: 0;
+    display: inline-block;
+  }
+  a {
+    float: right;
+  }
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .7s ease;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0;
+}
+.button-within-header {
+  margin-top: 32px;
+}
+.table-form td input {
+  width: 80%;
 }

@@ -7,7 +7,7 @@
       </a>
       <span class="dropdown" :class="{ open: addMore }">
         <a href="#" class="btn btn-default dropdown-toggle" @click.prevent="clickAddMore()">
-          <i class="fa fa-arrow-down"></i>其余功能
+          其余功能<i class="fa fa-angle-down"></i>
         </a>
         <ul class="dropdown-menu">
           <li><a href="#" @click.prevent="newRecipient">添加新收样人</a></li>
@@ -22,14 +22,17 @@
             <td>{{ batch.id }}</td>
             <td>{{ batch.client_id }}</td>
             <td>
-              <a href="#" class="btn btn-primary btn-sm" @click="samples(batch)"><i class="fa fa-eye"></i></a>
-              <a href="#" class="btn btn-default btn-sm" @click="editBatch(batch)"><i class="fa fa-edit"></i></a>
-              <a href="#" class="btn btn-danger btn-sm" @click="askRemoveBatch(batch)"><i class="fa fa-times"></i></a>
+              <div class="btn-group btn-group-sm">
+                <button class="btn btn-primary" @click.prevent="samples(batch)"><i class="fa fa-eye"></i></button>
+                <button class="btn btn-default" @click.prevent="editBatch(batch)"><i class="fa fa-edit"></i></button>
+                <button class="btn btn-danger" @click.prevent="askRemoveBatch(batch)"><i class="fa fa-times"></i></button>
+              </div>
+
             </td>
           </tr></tbody>
         </table>
-          <pagination :paginationData="pagination" :currentPage="currentPage" :maxItems="pagination.total"></pagination>
       </div>
+      <pagination :paginationData="pagination" :currentPage="currentPage" :maxItems="pagination.total"></pagination>
     </div>
     <!-- 样品接收人管理 -->
     <div class="modal fade" id="recipientForm" tabindex="-1" role="dialog">
@@ -106,6 +109,8 @@ export default {
   },
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
+    this.$bus.$on('batches.created', this.fetchBatches())
+    this.$bus.$on('batches.update', this.fetchBatches())
     this.fetchBatches()
   },
   computed: {
@@ -126,12 +131,16 @@ export default {
     currentPage: 'fetchBatches',
     $route: 'fetchBatches'
   },
+  beforeRouterLeave (ro, from, next) {
+    this.$bus.$off('batches.created')
+    this.$bus.$off('batches.updated')
+    next()
+  },
   methods: {
     ...mapActions(['batchesSetData', 'recipientsSetData', 'locationsSetData']),
     fetchBatches () {
       this.$http.get(`batches?page=${this.currentPage}`)
       .then(({ data }) => {
-        console.log(data)
         this.batchesSetData({
           batches: data.data,
           batches_pagination: data.meta.pagination
@@ -159,7 +168,10 @@ export default {
     },
     addNew () {
       this.$router.push({
-        name: 'batches.new'
+        name: 'batches.new',
+        query: {
+          page: this.currentPage
+        }
       })
     },
     samples (batch) {

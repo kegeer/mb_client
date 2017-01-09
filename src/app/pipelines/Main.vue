@@ -1,9 +1,9 @@
 <template lang="html">
   <div>
     <div id="list">
-      <h3>所有项目</h3>
+      <h3>所有技术路线</h3>
       <a href="#" class="btn btn-primary" @click.prevent="addNew()">
-        <i class="fa fa-plus"></i>添加新项目
+        <i class="fa fa-plus"></i>添加新技术路线
       </a>
       <span class="dropdown" :class="{ open: addMore }">
         <a href="#" class="btn btn-default" @click.prevent="clickAddMore()">
@@ -16,24 +16,21 @@
 
       <div class="table-content">
         <table class="table table-striped">
-          <thead><tr><th>ID</th><th>名称</th><th>负责人</th><th>操作</th></tr></thead>
-          <tbody><tr v-for="project in projects">
-            <td>{{ project.id }}</td>
-            <td>{{ project.name }}</td>
-            <td>{{ project.manager }}</td>
+          <thead><tr><th>ID</th><th>名称</th><th>操作</th></tr></thead>
+          <tbody><tr v-for="pipeline in pipelines">
+            <td>{{ pipeline.id }}</td>
+            <td>{{ pipeline.name }}</td>
             <td>
-              <div class="btn-group btn-group-sm">
-                <button class="btn btn-primary" @click.prevent="tasks(project)"><i class="fa fa-eye"></i></button>
-                <button class="btn btn-default" @click.prevent="editProject(project)"><i class="fa fa-edit"></i></button>
-                <button class="btn btn-danger" @click.prevent="askRemoveProject(project)"><i class="fa fa-times"></i></button>
-              </div>
+              <a href="#" class="btn btn-primary btn-sm" @click="protocols(pipeline)"><i class="fa fa-eye"></i></a>
+              <a href="#" class="btn btn-default btn-sm" @click="editPipeline(pipeline)"><i class="fa fa-edit"></i></a>
+              <a href="#" class="btn btn-danger btn-sm" @click="askRemovePipeline(pipeline)"><i class="fa fa-times"></i></a>
             </td>
           </tr></tbody>
         </table>
           <pagination :paginationData="pagination" :currentPage="currentPage" :maxItems="pagination.total"></pagination>
       </div>
     </div>
-    <!-- 项目负责人管理 -->
+    <!-- 技术路线负责人管理 -->
     <div class="modal fade" id="managersForm" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-md">
         <div class="modal-content">
@@ -52,7 +49,7 @@
               <tr>
                 <form @submit.prevent="addNewManager()">
                   <td><input type="text" v-model="manager.name" class="form-control" placeholder="姓名"></td>
-                  <td><button class="btn btn-primary" @click.prevent="addNewManager">c</button></td>
+                  <td><button class="btn btn-primary" @click.prevent="addNewManager">添加</button></td>
                 </form>
               </tr>
             </tbody>
@@ -60,11 +57,11 @@
         </div>
       </div>
     </div>
-
     <!-- main container form router-view -->
     <div id="main">
       <router-view></router-view>
     </div>
+
   </div>
 </template>
 
@@ -74,40 +71,37 @@ export default {
   data () {
     return {
       manager: { name: '' },
-      location: { name: '' },
       addMore: false
     }
   },
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
-    this.$bus.$on('projects.created', this.fetchProjects()),
-    this.$bus.$on('projects.updated', this.fetchProjects()),
-    this.fetchProjects()
+    this.fetchPipeline()
   },
   computed: {
     ...mapState({
-      projects: state => state.Projects.projects,
-      projects_pagination: state => state.Projects.projects_pagination,
-      managers: state => state.Projects.managers
+      pipelines: state => state.Pipelines.pipelines,
+      pipelines_pagination: state => state.Pipelines.pipelines_pagination,
+      managers: state => state.Pipelines.managers
     }),
     currentPage () {
       return parseInt(this.$route.query.page, 10) || 1
     },
     pagination () {
-      return this.projects_pagination
+      return this.pipelines_pagination
     }
   },
   watch: {
     currentPage: 'fetchBatches'
   },
   methods: {
-    ...mapActions(['projectsSetData', 'managersSetData', 'locationsSetData']),
-    fetchProjects () {
-      this.$http.get(`projects?page=${this.currentPage}`)
+    ...mapActions(['pipelinesSetData', 'managersSetData', 'locationsSetData']),
+    fetchPipeline () {
+      this.$http.get(`pipelines?page=${this.currentPage}`)
       .then(({ data }) => {
-        this.projectsSetData({
-          projects: data.data,
-          projects_pagination: data.meta.pagination
+        this.pipelinesSetData({
+          pipelines: data.data,
+          pipelines_pagination: data.meta.pagination
         })
       })
     },
@@ -119,46 +113,51 @@ export default {
         })
       })
     },
+    fetchLocations () {
+      this.$http.get('locations')
+      .then(({ data }) => {
+        this.locationsSetData({
+          locations: data.data
+        })
+      })
+    },
     clickAddMore () {
       this.addMore = !this.addMore
     },
     addNew () {
       this.$router.push({
-        name: 'projects.new',
-        query: {
-          page: this.currentPage
-        }
+        name: 'pipelines.new'
       })
     },
-    tasks (project) {
-      let id = project.id
+    protocols (pipeline) {
+      let id = pipeline.id
       this.$router.push({
-        name: 'project.tasks.index',
+        name: 'pipeline.protocols.index',
         params: { id }
       })
     },
-    editProject (project) {
-      let id = project.id
+    editPipeline (pipeline) {
+      let id = pipeline.id
       this.$router.push({
-        name: 'projects.edit',
+        name: 'pipelines.edit',
         params: { id }
       })
     },
-    askRemoveProject (project) {
+    askRemovePipeline (pipeline) {
       swal({
         title: '确定吗？',
-        text: `项目${project.id}将会被删除`,
+        text: `技术路线${pipeline.id}将会被删除`,
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#dd6b55',
         confirmButtonText: '确定',
         closeOnConfirm: false
-      }, () => this.deleteProject(project))
+      }, () => this.deletePipeline(pipeline))
     },
-    deleteProject (project) {
-      this.$http.delete(`projects/${project.id}`)
+    deletePipeline (pipeline) {
+      this.$http.delete(`pipelines/${pipeline.id}`)
       .then(() => {
-        swal('完成', '项目删除成功', 'success')
+        swal('完成', '技术路线删除成功', 'success')
       })
     },
     newManager () {

@@ -2,17 +2,26 @@
   <div id="nav" class="col-md-12" :class="{ active: isActive }">
     <a href="#" class="nav-menu-button" @click.prevent="toggleMenu">导航</a>
     <div class="nav-inner">
-      <button class="btn btn-primary">新增</button>
+      <h4 style="color: #fff;">样品管理系统</h4>
       <div class="menu">
         <ul class="menu-list">
           <li class="menu-list-item">
-            <router-link :to="{ name: 'batches.index' }"><i class="fa fa-user"></i>样品管理</router-link>
+            <router-link :to="{ name: 'batches.index' }" class="menu-link"><i class="fa fa-list"></i>样品批次</router-link>
           </li>
           <li class="menu-list-item">
-            <a href="#" class="menu-link">
-              任务管理
-              <span class="msg-count">(1)</span>
-            </a>
+            <router-link :to="{ name: 'projects.index' }" class="menu-link"><i class="fa fa-th"></i>项目任务</router-link>
+          </li>
+          <li class="menu-list-item">
+            <router-link :to="{ name: 'pipelines.index' }" class="menu-link"><i class="fa fa-sort-numeric-asc"></i>技术路线</router-link>
+          </li>
+          <li class="menu-list-item">
+            <router-link :to="{ name: 'experiments.index' }" class="menu-link"><i class="fa fa-retweet"></i>实验流程</router-link>
+          </li>
+          <li class="menu-list-item">
+            <router-link :to="{ name: 'qcs.index' }" class="menu-link"><i class="fa fa-sitemap"></i>数据质控</router-link>
+          </li>
+          <li class="menu-list-item">
+            <router-link :to="{ name: 'results.index' }" class="menu-link"><i class="fa fa-file-o"></i>结果报告</router-link>
           </li>
           <li class="menu-heading">样品状态</li>
           <li class="menu-list-item">
@@ -55,6 +64,7 @@
   }
 </script>
 <style lang="scss">
+@import "../../assets/scss/variables";
 .menu {
   background: transparent;
   border:none;
@@ -65,7 +75,9 @@
   margin-left: 0.5em;
   &:hover,
   &:focus {
-    background: rgb(55, 60, 90);
+    background: transparent;
+    text-decoration: none;
+
   }
 }
 .menu-heading {
@@ -81,8 +93,11 @@ ul.menu-list {
   position: relative;
   padding: 0;
   li {
-    width: 100%;
-    padding: 2em 0;
+    background: transparent;
+    padding: 1em 0em;
+    i, span {
+      margin-right: 1em;
+    }
   }
 }
 
@@ -95,6 +110,18 @@ ul.menu-list {
   display: inline-block;
   margin-right: 0.5em;
   border-radius: 3px;
-  background: #ffc94c;
 }
+.label-primary {
+  background: $brand-primary;
+}
+.label-warning {
+  background: $brand-warning;
+}
+.label-error {
+  background: $brand-danger;
+}
+.label-default {
+  background: $brand-info;
+}
+
 </style>

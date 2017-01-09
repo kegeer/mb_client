@@ -64,7 +64,7 @@
         if (this.totalPages === 0) {
           firstItem = 0
         }
-        return `${firstItem} a ${lastItem}`
+        return `${firstItem} 到 ${lastItem}`
       }
     },
     methods: {
@@ -153,12 +153,9 @@
 <template>
   <div>
     <div class="row" v-if="hasData">
-      <div class="col-md-6">
-        <p class="rangeInformation">Showing {{ currentRange }} of {{ paginationData.total }}</p>
-      </div>
-      <div class="col-md-6 text-right">
-        <nav aria-label="Page navigation">
-          <ul class="pagination">
+      <div class="col-md-12 text-center">
+        <nav aria-label="页面导航">
+          <ul class="pagination pagination-sm">
             <li :class="{ disabled: isFirst }">
               <a href="#" aria-label="Previous" @click.prevent="navigatePrevious()">
                 <span aria-hidden="true">&laquo;</span>
@@ -175,6 +172,9 @@
             </li>
           </ul>
         </nav>
+      </div>
+      <div class="col-md-12 text-center" style="margin-top: 0px;">
+        <p class="rangeInformation">显示 {{ currentRange }} of {{ paginationData.total }}</p>
       </div>
     </div>
   </div>

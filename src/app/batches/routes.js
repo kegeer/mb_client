@@ -34,6 +34,11 @@ export default [
             name: 'batch.samples.new',
             path: 'new',
             component: SamplesForm
+          },
+          {
+            name: 'batch.samples.edit',
+            path: ':sample_id/edit',
+            component: SamplesForm
           }
         ]
       }
