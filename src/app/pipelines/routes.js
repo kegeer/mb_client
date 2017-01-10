@@ -20,18 +20,18 @@ export default [
         component: Form
       },
       {
-        path: ':id/protocols',
-        name: 'pipeline.protocols.index',
+        path: '/protocols',
+        name: 'protocols.index',
         component: Protocols,
         children: [
           {
             path: 'new',
-            name: 'pipeline.protocols.new',
+            name: 'protocols.new',
             component: ProtocolsForm
           },
           {
-            path: ':task_id/edit',
-            name: 'pipeline.protocols.edit',
+            path: ':protocol_id/edit',
+            name: 'protocols.edit',
             component: ProtocolsForm
           }
         ]

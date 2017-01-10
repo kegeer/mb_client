@@ -115,6 +115,7 @@
         <div class="col-sm-4 col-sm-offset-4">
           <!-- <button type="button" class="btn btn-primary full-width"  @click.native.prevent="submit">提交</button> -->
           <a href="#" class="btn btn-default full-width" @click.prevent="submit">提交</a>
+          <a href="#" @click="eventOn">Ceshi</a>
         </div>
       </div>
     </form>
@@ -176,8 +177,10 @@ export default {
         })
       }
     },
+    eventOn () {
+      this.$bus.$emit('haha', { hha: 0})
+    },
     submit () {
-      console.log('sub')
       if (this.isValid) {
         this.setFetching({ fetching: true })
         if (this.isEditing) {
@@ -188,9 +191,10 @@ export default {
       }
     },
     save () {
-      this.$http.post('batches', pick(this.form, ['client_id', 'sample_type', 'sender', 'sender_contact', 'send_time', 'arrive_status', 'store_location', 'arrive_time', 'recipient', 'express_num', 'note']))
-      .then(() => {
+      this.$http.post('batches', pick(this.form, ['client_id', 'sample_type', 'sender', 'sender_contact', 'send_time', 'arrive_status', 'store_location', 'arrive_time', 'recipient', 'express_num', 'note'])).then(() => {
+        // this.$bus.$emit('haha', { hha: 0})
         this.$bus.$emit('batches.created')
+        // this.$bus.$emit('batches.created')
         this.setFetching({ fetching: false })
         this.setMessage({ type: 'success', message: '新批次录入成功'})
         this.reset()

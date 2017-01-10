@@ -7,5 +7,6 @@ export default {
     warning: '',
     validation: {}
   },
-  fetching: false
+  fetching: false,
+  procedures: []
 }

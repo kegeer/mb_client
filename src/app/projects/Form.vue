@@ -79,8 +79,8 @@ export default {
         this.setFetching({ fetching: true })
         this.$http.get(`projects/${id}`)
         .then(({ data }) => {
-          let  batch = data.data
-          this.form = {...batch}
+          let project = data.data
+          this.form = {...project}
           this.setFetching({ fetching: false })
         })
       }

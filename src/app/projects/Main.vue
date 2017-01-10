@@ -84,6 +84,11 @@ export default {
     this.$bus.$on('projects.updated', this.fetchProjects()),
     this.fetchProjects()
   },
+  beforeRouterLeave (to, from, next) {
+    this.$bus.$off('projects.created'),
+    this.$bus.$off('projects.updated'),
+    next()
+  },
   computed: {
     ...mapState({
       projects: state => state.Projects.projects,

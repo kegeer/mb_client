@@ -10,4 +10,7 @@ export default {
   [TYPES.MAIN_SET_MESSAGE] (state, obj) {
     state.messages[obj.type] = obj.message
   },
+  [TYPES.PROCEDURES_SET_DATA] (state, obj) {
+    state.procedures = obj.procedures
+  }
 }

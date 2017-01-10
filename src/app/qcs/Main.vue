@@ -15,7 +15,7 @@
             </td>
           </tr></tbody>
         </table>
-          <pagination :paginationData="pagination" :currentPage="currentPage" :maxItems="pagination.total"></pagination>
+        <pagination :paginationData="pagination" :currentPage="currentPage" :maxItems="pagination.total"></pagination>
       </div>
     </div>
 
@@ -31,7 +31,14 @@ import { mapState, mapActions } from 'vuex'
 export default {
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
+    this.$bus.$on('qcs.created', this.fetchQcs),
+    this.$bus.$on('qcs.updated', this.fetchQcs),
     this.fetchQcs()
+    console.log({...this.qcs})
+  },
+  beforeRouterLeave (to, from, next) {
+    this.$bus.$off('qcs.created')
+    this.$bus.$off('qcs.updated')
   },
   computed: {
     ...mapState({
@@ -53,6 +60,7 @@ export default {
     fetchQcs () {
       this.$http.get(`qcs?page=${this.currentPage}`)
       .then(({ data }) => {
+        console.log(data.data)
         this.qcsSetData({
           qcs: data.data,
           qcs_pagination: data.meta.pagination
@@ -86,7 +94,7 @@ export default {
       })
     },
     navigate (obj) {
-      this.$router.push({ name: 'batches.index', query:{ page: obj.page }})
+      this.$router.push({ name: 'qcs.index', query:{ page: obj.page }})
     }
   }
 }

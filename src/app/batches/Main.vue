@@ -10,6 +10,7 @@
           其余功能<i class="fa fa-angle-down"></i>
         </a>
         <ul class="dropdown-menu">
+          <li><a href="#" @click.prevent="newClient">添加新客户</a></li>
           <li><a href="#" @click.prevent="newRecipient">添加新收样人</a></li>
           <li><a href="#" @click.prevent="newLocation">添加新存储位置</a></li>
         </ul>
@@ -46,7 +47,7 @@
               <tr v-for="r in recipients">
                 <td>{{ r.name }}</td>
                 <td>
-                  <a href="#" class="btn btn-sm btn-default" @click="editRecipoent(r)"><i class="fa fa-edit"></i></a>
+                  <a href="#" class="btn btn-sm btn-default" @click="editRecipient(r)"><i class="fa fa-edit"></i></a>
                   <a href="#" class="btn btn-sm btn-warning" @click="deleteRecipient(r)"><i class="fa fa-times"></i></a>
                 </td>
               </tr>
@@ -54,6 +55,33 @@
                 <form @submit.prevent="addNewRecipient()">
                   <td><input type="text" v-model="recipient.name" class="form-control" placeholder="姓名"></td>
                   <td><button class="btn btn-primary" @click.prevent="addNewRecipient">添加</button></td>
+                </form>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- 客户管理 -->
+    <div class="modal fade" id="clientForm" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <table class="table">
+            <thead>
+              <tr><th>姓名</th><th>操作</th></tr>
+            </thead>
+            <tbody>
+              <tr v-for="client in clients">
+                <td>{{ client.name }}</td>
+                <td>
+                  <a href="#" class="btn btn-sm btn-default" @click="editClient(client)"><i class="fa fa-edit"></i></a>
+                  <a href="#" class="btn btn-sm btn-warning" @click="deleteClient(client)"><i class="fa fa-times"></i></a>
+                </td>
+              </tr>
+              <tr>
+                <form @submit.prevent="addNewClient()">
+                  <td><input type="text" v-model="client.name" class="form-control" placeholder="姓名"></td>
+                  <td><button class="btn btn-primary" @click.prevent="addNewClient">添加</button></td>
                 </form>
               </tr>
             </tbody>
@@ -109,8 +137,9 @@ export default {
   },
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
-    this.$bus.$on('batches.created', this.fetchBatches())
-    this.$bus.$on('batches.update', this.fetchBatches())
+    this.$bus.$on('batches.created', () => this.fetchBatches)
+    this.$bus.$on('batches.update', () => this.fetchBatches)
+    this.$bus.$on('haha', obj => console.log(obj))
     this.fetchBatches()
   },
   computed: {
@@ -131,7 +160,7 @@ export default {
     currentPage: 'fetchBatches',
     $route: 'fetchBatches'
   },
-  beforeRouterLeave (ro, from, next) {
+  beforeRouterLeave (to, from, next) {
     this.$bus.$off('batches.created')
     this.$bus.$off('batches.updated')
     next()
@@ -144,22 +173,6 @@ export default {
         this.batchesSetData({
           batches: data.data,
           batches_pagination: data.meta.pagination
-        })
-      })
-    },
-    fetchRecipients () {
-      this.$http.get('recipients')
-      .then(({ data }) => {
-        this.recipientsSetData({
-          recipients: data.data
-        })
-      })
-    },
-    fetchLocations () {
-      this.$http.get('locations')
-      .then(({ data }) => {
-        this.locationsSetData({
-          locations: data.data
         })
       })
     },
@@ -206,6 +219,11 @@ export default {
         this.fetchBatches()
       })
     },
+    newClient () {
+      this.fetchClients()
+      this.clickAddMore()
+      $('#clientForm').modal('show')
+    },
     newRecipient () {
       this.fetchRecipients()
       this.clickAddMore()
@@ -220,6 +238,30 @@ export default {
       this.$http.post('recipients', this.recipients)
       .then(() => {
         this.fetchRecipients
+      })
+    },
+    fetchClients () {
+      this.$http.get('clients')
+      .then(({ data }) => {
+        this.clientsSetData ({
+          clients: data.data
+        })
+      })
+    },
+    fetchRecipients () {
+      this.$http.get('recipients')
+      .then(({ data }) => {
+        this.recipientsSetData({
+          recipients: data.data
+        })
+      })
+    },
+    fetchLocations () {
+      this.$http.get('locations')
+      .then(({ data }) => {
+        this.locationsSetData({
+          locations: data.data
+        })
       })
     },
     editRecipient (r) {

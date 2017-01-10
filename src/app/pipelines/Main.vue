@@ -7,9 +7,10 @@
       </a>
       <span class="dropdown" :class="{ open: addMore }">
         <a href="#" class="btn btn-default" @click.prevent="clickAddMore()">
-          <i class="fa fa-arrow-down"></i>其余功能
+          其余功能<i class="fa fa-angle-down"></i>
         </a>
         <ul class="dropdown-menu">
+          <li><a href="#" @click.prevent="protocols">所有实验方法</a></li>
           <li><a href="#" @click.prevent="newManager">添加项目负责人</a></li>
         </ul>
       </span>
@@ -21,7 +22,6 @@
             <td>{{ pipeline.id }}</td>
             <td>{{ pipeline.name }}</td>
             <td>
-              <a href="#" class="btn btn-primary btn-sm" @click="protocols(pipeline)"><i class="fa fa-eye"></i></a>
               <a href="#" class="btn btn-default btn-sm" @click="editPipeline(pipeline)"><i class="fa fa-edit"></i></a>
               <a href="#" class="btn btn-danger btn-sm" @click="askRemovePipeline(pipeline)"><i class="fa fa-times"></i></a>
             </td>
@@ -76,7 +76,9 @@ export default {
   },
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
-    this.fetchPipeline()
+    this.$bus.$on('pipelines.created', this.fetchPipelines()),
+    this.$bus.$on('pipelines.updated', this.fetchPipelines()),
+    this.fetchPipelines()
   },
   computed: {
     ...mapState({
@@ -91,12 +93,17 @@ export default {
       return this.pipelines_pagination
     }
   },
+  beforeRouterLeave (to, from, next) {
+    this.$bus.$off('pipelines.created'),
+    this.$bus.$off('pipelines.updated'),
+    next()
+  },
   watch: {
     currentPage: 'fetchBatches'
   },
   methods: {
     ...mapActions(['pipelinesSetData', 'managersSetData', 'locationsSetData']),
-    fetchPipeline () {
+    fetchPipelines () {
       this.$http.get(`pipelines?page=${this.currentPage}`)
       .then(({ data }) => {
         this.pipelinesSetData({
@@ -113,12 +120,9 @@ export default {
         })
       })
     },
-    fetchLocations () {
-      this.$http.get('locations')
-      .then(({ data }) => {
-        this.locationsSetData({
-          locations: data.data
-        })
+    protocols () {
+      this.$router.push({
+        name: 'protocols.index'
       })
     },
     clickAddMore () {

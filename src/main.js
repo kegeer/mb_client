@@ -6,11 +6,11 @@ import router from './router'
 import store from './store'
 import { sync } from 'vuex-router-sync'
 import http from './plugins/http'
-import eventBus from './plugins/eventBus'
+import eventbus from './plugins/eventbus'
 import Pagination from './components/general/Pagination'
 
 Vue.use(http, { router, store })
-Vue.use(eventBus)
+Vue.use(eventbus)
 Vue.component('pagination', Pagination)
 require('./includes')
 sync(store, router)

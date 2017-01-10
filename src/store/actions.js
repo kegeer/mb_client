@@ -16,5 +16,8 @@ export default {
     commit(TYPES.MAIN_SET_MESSAGE, { type: 'error', message: [] })
     commit(TYPES.MAIN_SET_MESSAGE, { type: 'warning', message: '' })
     commit(TYPES.MAIN_SET_MESSAGE, { type: 'validation', message: {} })
+  },
+  proceduresSetData ({ commit }, obj) {
+    commit(TYPES.PROCEDURES_SET_DATA, obj)
   }
 }

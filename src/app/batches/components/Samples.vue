@@ -48,8 +48,8 @@ export default {
   },
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
-    this.$bus.$on('samples.created', this.fetchSamples())
-    this.$bus.$on('samples.updated', this.fetchSamples())
+    this.$bus.$on('samples.created', () => this.fetchSamples())
+    this.$bus.$on('samples.updated', () => this.fetchSamples())
     this.fetchSamples()
   },
   computed: {
