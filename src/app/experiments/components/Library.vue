@@ -81,8 +81,8 @@ export default {
   },
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
-    this.$bus.$on('libraries.created', this.fetchDilutions())
-    this.$bus.$on('libraries.updated', this.fetchDilutions())
+    this.$bus.$on('libraries.created', () => this.fetchDilutions())
+    this.$bus.$on('libraries.updated', () => this.fetchDilutions())
     this.fetchDilutions()
   },
   computed: {

@@ -74,8 +74,8 @@ export default {
   },
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
-    this.$bus.$on('dilutions.created', this.fetchDilutions())
-    this.$bus.$on('dilutions.updated', this.fetchDilutions())
+    this.$bus.$on('dilutions.created', () => this.fetchDilutions())
+    this.$bus.$on('dilutions.updated', () => this.fetchDilutions())
     this.fetchDilutions()
   },
   computed: {

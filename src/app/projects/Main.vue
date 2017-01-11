@@ -80,8 +80,8 @@ export default {
   },
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
-    this.$bus.$on('projects.created', this.fetchProjects()),
-    this.$bus.$on('projects.updated', this.fetchProjects()),
+    this.$bus.$on('projects.created', () => this.fetchProjects()),
+    this.$bus.$on('projects.updated', () => this.fetchProjects()),
     this.fetchProjects()
   },
   beforeRouterLeave (to, from, next) {

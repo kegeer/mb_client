@@ -132,7 +132,8 @@ export default {
     return {
       recipient: { name: '' },
       location: { name: '' },
-      addMore: false
+      addMore: false,
+      client: { name: '' }
     }
   },
   mounted () {
@@ -147,7 +148,8 @@ export default {
       batches: state => state.Batches.batches,
       batches_pagination: state => state.Batches.batches_pagination,
       recipients: state => state.Batches.recipients,
-      locations: state => state.Batches.locations
+      locations: state => state.Batches.locations,
+      clients: state => state.Batches.clients
     }),
     currentPage () {
       return parseInt(this.$route.query.page, 10) || 1

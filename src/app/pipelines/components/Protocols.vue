@@ -49,8 +49,8 @@ export default {
   },
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
-    this.$bus.$on('protocols.created', this.fetchProtocols())
-    this.$bus.$on('protocols.updated', this.fetchProtocols())
+    this.$bus.$on('protocols.created', () => this.fetchProtocols())
+    this.$bus.$on('protocols.updated', () => this.fetchProtocols())
     this.fetchProtocols()
   },
   computed: {

@@ -16,26 +16,34 @@ const LibrariesForm = r => require.ensure([], () => r(require('./components/Libr
 const Sequences = r => require.ensure([], () => r(require('./components/Sequence.vue')), 'experiments-bundle')
 const SequencesForm = r => require.ensure([], () => r(require('./components/SequenceForm.vue')), 'experiments-bundle')
 
+const meta = {
+  requiresAuth: true,
+}
+
 export default [
   {
     path: '/experiments',
     name: 'experiments.index',
     component: Experiments,
+    meta,
     children: [
       {
         path: 'splits',
         name: 'splits.index',
         component: Splits,
+        meta,
         children: [
           {
             name: 'splits.new',
             path: 'new',
-            component: SplitsForm
+            component: SplitsForm,
+            meta
           },
           {
             name: 'splits.edit',
             path: ':split_id/edit',
-            component: SplitsForm
+            component: SplitsForm,
+            meta
           }
         ]
       },
@@ -43,16 +51,19 @@ export default [
         path: 'extractions',
         name: 'extractions.index',
         component: Extractions,
+        meta,
         children: [
           {
             name: 'extractions.new',
             path: 'new',
-            component: ExtractionsForm
+            component: ExtractionsForm,
+            meta
           },
           {
             name: 'extractions.edit',
             path: ':extraction_id/edit',
-            component: ExtractionsForm
+            component: ExtractionsForm,
+            meta
           }
         ]
       },
@@ -60,16 +71,19 @@ export default [
         path: 'dilutions',
         name: 'dilutions.index',
         component: Dilutions,
+        meta,
         children: [
           {
             name: 'dilutions.new',
             path: 'new',
-            component: DilutionsForm
+            component: DilutionsForm,
+            meta
           },
           {
             name: 'dilutions.edit',
             path: ':dilution_id/edit',
-            component: DilutionsForm
+            component: DilutionsForm,
+            meta
           }
         ]
       },
@@ -77,16 +91,19 @@ export default [
         path: 'distributions',
         name: 'distributions.index',
         component: Distributions,
+        meta,
         children: [
           {
             name: 'distributions.new',
             path: 'new',
-            component: DistributionsForm
+            component: DistributionsForm,
+            meta
           },
           {
             name: 'distributions.edit',
             path: ':distribution_id/edit',
-            component: DistributionsForm
+            component: DistributionsForm,
+            meta
           }
         ]
       },
@@ -94,16 +111,19 @@ export default [
         path: 'analysises',
         name: 'analysises.index',
         component: Analysises,
+        meta,
         children: [
           {
             name: 'analysises.new',
             path: 'new',
-            component: AnalysisesForm
+            component: AnalysisesForm,
+            meta
           },
           {
             name: 'analysises.edit',
             path: ':analysis_id/edit',
-            component: AnalysisesForm
+            component: AnalysisesForm,
+            meta
           }
         ]
       },
@@ -111,16 +131,19 @@ export default [
         path: 'poolings',
         name: 'poolings.index',
         component: Poolings,
+        meta,
         children: [
           {
             name: 'poolings.new',
             path: 'new',
-            component: PoolingsForm
+            component: PoolingsForm,
+            meta
           },
           {
             name: 'poolings.edit',
             path: ':pooling_id/edit',
-            component: PoolingsForm
+            component: PoolingsForm,
+            meta
           }
         ]
       },
@@ -128,16 +151,19 @@ export default [
         path: 'libraries',
         name: 'libraries.index',
         component: Libraries,
+        meta,
         children: [
           {
             name: 'libraries.new',
             path: 'new',
-            component: LibrariesForm
+            component: LibrariesForm,
+            meta
           },
           {
             name: 'libraries.edit',
             path: ':library_id/edit',
-            component: LibrariesForm
+            component: LibrariesForm,
+            meta
           }
         ]
       },
@@ -145,16 +171,19 @@ export default [
         path: 'sequences',
         name: 'sequences.index',
         component: Sequences,
+        meta,
         children: [
           {
             name: 'sequences.new',
             path: 'new',
-            component: SequencesForm
+            component: SequencesForm,
+            meta
           },
           {
             name: 'sequences.edit',
             path: ':sequence_id/edit',
-            component: SequencesForm
+            component: SequencesForm,
+            meta
           }
         ]
       }

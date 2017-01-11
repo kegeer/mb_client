@@ -53,8 +53,8 @@ export default {
   },
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
-    this.$bus.$on('tasks.created', this.fetchTasks())
-    this.$bus.$on('tasks.updated', this.fetchTasks())
+    this.$bus.$on('tasks.created', () => this.fetchTasks())
+    this.$bus.$on('tasks.updated', () => this.fetchTasks())
     this.fetchTasks()
   },
   computed: {

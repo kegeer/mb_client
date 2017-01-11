@@ -72,8 +72,8 @@ export default {
   },
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
-    this.$bus.$on('distributions.created', this.fetchDistributions())
-    this.$bus.$on('distributions.updated', this.fetchDistributions())
+    this.$bus.$on('distributions.created', () => this.fetchDistributions())
+    this.$bus.$on('distributions.updated', () => this.fetchDistributions())
     this.fetchDistributions()
   },
   computed: {

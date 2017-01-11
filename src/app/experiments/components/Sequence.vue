@@ -74,8 +74,8 @@ export default {
   },
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
-    this.$bus.$on('sequences.created', this.fetchSequences())
-    this.$bus.$on('sequences.updated', this.fetchSequences())
+    this.$bus.$on('sequences.created', () => this.fetchSequences())
+    this.$bus.$on('sequences.updated', () => this.fetchSequences())
     this.fetchSequences()
   },
   computed: {

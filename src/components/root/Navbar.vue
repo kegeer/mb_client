@@ -3,6 +3,8 @@
     <a href="#" class="nav-menu-button" @click.prevent="toggleMenu">导航</a>
     <div class="nav-inner">
       <h4 style="color: #fff;">样品管理系统</h4>
+      <h3>{{ currentUser.name }}</h3>
+      <a href="/logout" class="btn btn-default btn-sm"><i class="fa fa-logout"></i>登出</a>
       <div class="menu">
         <ul class="menu-list">
           <li class="menu-list-item">
@@ -50,15 +52,37 @@
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex'
   export default {
     data () {
       return {
         isActive: false
       }
     },
+    computed: {
+      ...mapGetters(['currentUser', 'isLogged'])
+    },
+    watch: {
+      isLogged (value) {
+        if (value === false) {
+          this.$router.push({ name: 'auth.signin' })
+        }
+      }
+    },
     methods: {
+      ...mapActions(['logout']),
       toggleMenu () {
         this.isActive = !this.isActive
+      },
+      navigate (name) {
+        switch (name) {
+          case 'logout':
+          this.logout()
+          break
+          default:
+          this.$router.push({ name })
+          break
+        }
       }
     }
   }

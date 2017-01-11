@@ -4,7 +4,7 @@ const Samples = r => require.ensure([], () => r(require('./components/Samples'))
 const SamplesForm = r => require.ensure([], () => r(require('./components/SamplesForm')), 'batches-bundle')
 
 const meta = {
-  requiresAuth: false,
+  requiresAuth: true,
 }
 
 export default [

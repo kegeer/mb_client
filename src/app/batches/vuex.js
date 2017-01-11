@@ -6,7 +6,8 @@ const state = {
   samples: [],
   samples_pagination: {},
   recipients: [],
-  locations: []
+  locations: [],
+  clients: []
 }
 
 /* eslint-disable no-param-reassign */
@@ -24,6 +25,9 @@ const mutations = {
   },
   [TYPES.LOCATIONS_SET_DATA](st, obj) {
     st.locations = obj.locations
+  },
+  [TYPES.CLIENTS_SET_DATA](st, obj) {
+    st.clients = obj.clients
   }
 }
 
@@ -39,6 +43,9 @@ const actions = {
   },
   locationsSetData({ commit }, obj) {
     commit(TYPES.LOCATIONS_SET_DATA, obj)
+  },
+  clientsSetData({ commit }, obj) {
+    commit(TYPES.CLIENTS_SET_DATA, obj)
   }
 }
 

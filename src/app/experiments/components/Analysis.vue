@@ -76,8 +76,8 @@ export default {
   },
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
-    this.$bus.$on('analysises.created', this.fetchAnalysiss())
-    this.$bus.$on('analysises.updated', this.fetchAnalysiss())
+    this.$bus.$on('analysises.created', () => this.fetchAnalysiss())
+    this.$bus.$on('analysises.updated', () => this.fetchAnalysiss())
     this.fetchAnalysiss()
   },
   computed: {

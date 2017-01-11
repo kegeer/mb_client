@@ -31,8 +31,8 @@ import { mapState, mapActions } from 'vuex'
 export default {
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
-    this.$bus.$on('qcs.created', this.fetchQcs),
-    this.$bus.$on('qcs.updated', this.fetchQcs),
+    this.$bus.$on('qcs.created', () => this.fetchQcs),
+    this.$bus.$on('qcs.updated', () => this.fetchQcs),
     this.fetchQcs()
     console.log({...this.qcs})
   },

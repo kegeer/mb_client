@@ -3,11 +3,13 @@ export default [
   {
     path: '/dashboard',
     component: Dashboard,
-    name: 'dashboard.main'
+    name: 'dashboard.main',
+    meta:{ requiresAuth: true }
   },
   {
     path: '*',
     component: Dashboard,
-    name: 'catchAll'
+    name: 'catchAll',
+    meta:{ requiresAuth: true }
   }
 ]

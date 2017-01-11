@@ -76,8 +76,8 @@ export default {
   },
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
-    this.$bus.$on('pipelines.created', this.fetchPipelines()),
-    this.$bus.$on('pipelines.updated', this.fetchPipelines()),
+    this.$bus.$on('pipelines.created', () => this.fetchPipelines()),
+    this.$bus.$on('pipelines.updated', () => this.fetchPipelines()),
     this.fetchPipelines()
   },
   computed: {

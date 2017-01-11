@@ -72,8 +72,8 @@ export default {
   },
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
-    this.$bus.$on('splits.created', this.fetchSplits())
-    this.$bus.$on('splits.updated', this.fetchSplits())
+    this.$bus.$on('splits.created', () => this.fetchSplits())
+    this.$bus.$on('splits.updated', () => this.fetchSplits())
     this.fetchSplits()
   },
   computed: {

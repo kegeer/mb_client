@@ -5,8 +5,9 @@ import { vuex as Projects } from './projects'
 import { vuex as Pipelines } from './pipelines'
 import { vuex as Qcs } from './qcs'
 import { vuex as Results } from './results'
+import { vuex as Auth } from './auth'
 
-const vuex = {Experiments, Results, Qcs, Projects, Pipelines, Batches}
+const vuex = {Experiments, Results, Qcs, Projects, Pipelines, Batches, Auth}
 const keys = Object.keys(vuex)
 
 const modules = keys.reduce((acc, key) => ({...acc, [key]: vuex[key].module}), {})

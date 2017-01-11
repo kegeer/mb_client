@@ -75,8 +75,8 @@ export default {
   },
   mounted () {
     this.$bus.$on('navigate', obj => this.navigate(obj)),
-    this.$bus.$on('poolings.created', this.fetchPoolings())
-    this.$bus.$on('poolings.updated', this.fetchPoolings())
+    this.$bus.$on('poolings.created', () => this.fetchPoolings())
+    this.$bus.$on('poolings.updated', () => this.fetchPoolings())
     this.fetchPoolings()
   },
   computed: {
